@@ -7,7 +7,7 @@ api = Api(app)
 
 class serveresource(Resource):
     def get(self, filename):
-        return send_from_directory(os.getcwd()+'/music/', filename)
+        return send_from_directory(os.getcwd()+'/assets/', filename)
 
 
 class createstudent(Resource):
