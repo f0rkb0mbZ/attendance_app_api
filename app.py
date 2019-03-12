@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request, url_for, send_from_directory
 from flask_restful import Resource, Api
 from db import Connectdb
-
+import os
 app = Flask(__name__)
 api = Api(app)
+
+class serveresource(Resource):
+    def get(self, filename):
+        return send_from_directory(os.getcwd()+'/music/', filename)
+
 
 class createstudent(Resource):
     def post(self):
@@ -29,3 +34,4 @@ class getattendance(Resource):
 
 api.add_resource(createstudent, '/createstudent')
 api.add_resource(getattendance, '/getattendance/<string:roll_no>')
+api.add_resource(serveresource, '/getaudio/<string:filename>')
