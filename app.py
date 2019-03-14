@@ -44,7 +44,32 @@ class getstudentdatabase(Resource):
         res.insert(0, colnames)
         return {'database': res, 'message': 'success'}, 200
 
+class createclass(Resource):
+    def put(self, date):
+        student_db = Connectdb('studentdb')
+        stmt = "ALTER TABLE ece_3b_dsp ADD COLUMN `"+date+"` TINYINT(1)"
+        data = None
+        res = student_db.change(stmt, data)
+        return {'message': res}, 201
+
+class deleteclass(Resource):
+    def put(self, date):
+        student_db = Connectdb('studentdb')
+        stmt = "SHOW COLUMNS FROM ece_3b_dsp like '"+date+"'"
+        res = student_db.select(stmt, None)
+        if len(res) == 0:
+            return {'message': 'This class does not exist!'}, 404
+        else:
+            stmt2 = "ALTER TABLE ece_3b_dsp DROP COLUMN `"+date+"`"
+            res2 = student_db.change(stmt2, None)
+            return {'message': res2}, 200
+
+
+
+
 api.add_resource(createstudent, '/createstudent')
 api.add_resource(getattendance, '/getattendance/<string:date>/<string:roll_no>')
 api.add_resource(serveresource, '/getaudio/<string:filename>')
 api.add_resource(getstudentdatabase, '/getstuddb/<string:tablname>')
+api.add_resource(createclass, '/createclass/<string:date>')
+api.add_resource(deleteclass, '/deleteclass/<string:date>')
