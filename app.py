@@ -32,6 +32,15 @@ class getattendance(Resource):
         print(res)
         return {'message': res}, 201
 
+class getstudentdatabase(Resource):
+    def get(self, tablname):
+        student_db = Connectdb('studentdb')
+        stmt = "SELECT * FROM ece_3b_dsp"
+        data = None
+        res = student_db.select(stmt, data)
+        return {'database': res, 'message': 'success'}, 200
+
 api.add_resource(createstudent, '/createstudent')
 api.add_resource(getattendance, '/getattendance/<string:roll_no>')
 api.add_resource(serveresource, '/getaudio/<string:filename>')
+api.add_resource(getstudentdatabase, '/getstuddb/<string:tablname>')
