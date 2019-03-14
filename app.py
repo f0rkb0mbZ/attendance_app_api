@@ -26,7 +26,7 @@ class createstudent(Resource):
 class getattendance(Resource):
     def put(self, roll_no, date):
         attendancedb = Connectdb('studentdb')
-        stmt = "UPDATE ece_3b_dsp SET"+date+"=1 WHERE roll_no=%s"
+        stmt = "UPDATE ece_3b_dsp SET `"+date+"` =1 WHERE roll_no=%s"
         data = (date, roll_no, )
         res = attendancedb.change(stmt, data)
         print(res)
