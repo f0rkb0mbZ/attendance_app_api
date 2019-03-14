@@ -47,7 +47,7 @@ class getstudentdatabase(Resource):
 class createclass(Resource):
     def put(self, date):
         student_db = Connectdb('studentdb')
-        stmt = "ALTER TABLE ece_3b_dsp ADD COLUMN `"+date+"` TINYINT(1)"
+        stmt = "ALTER TABLE ece_3b_dsp ADD COLUMN `"+date+"` TINYINT(1) NULL"
         data = None
         res = student_db.change(stmt, data)
         return {'message': res}, 201
