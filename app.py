@@ -30,7 +30,7 @@ class getattendance(Resource):
         data = (roll_no, )
         res = attendancedb.change(stmt, data)
         print(res)
-        return {'message': res}, 201
+        return {'message': res, 'code': 201}, 201
 
 class getstudentdatabase(Resource):
     def get(self, tablname):
