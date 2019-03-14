@@ -41,7 +41,7 @@ API for the QR based class attendance app built using flutter
 ####     e.g. ece_3b_dsp == dept ece, 3rd year, section b, digital signal processing
 ###     Consumes: 
 ####     Tablename(String) in path param
-###     Procuces: 
+###     Produces: 
 ####     application/json
          Sample: {"database" : table, "message": "success"}, 200 OK
          
