@@ -24,10 +24,10 @@ class createstudent(Resource):
 
 
 class getattendance(Resource):
-    def put(self, roll_no):
+    def put(self, roll_no, date):
         attendancedb = Connectdb('studentdb')
-        stmt = "UPDATE solid_state_month_1 SET day_1=%s"
-        data = ('P', )
+        stmt = "UPDATE ece_3b_dsp SET %s=1 WHERE roll_no=%s"
+        data = (date, roll_no, )
         res = attendancedb.change(stmt, data)
         print(res)
         return {'message': res}, 201
@@ -45,6 +45,6 @@ class getstudentdatabase(Resource):
         return {'database': res, 'message': 'success'}, 200
 
 api.add_resource(createstudent, '/createstudent')
-api.add_resource(getattendance, '/getattendance/<string:roll_no>')
+api.add_resource(getattendance, '/getattendance/<string:date>/<string:roll_no>')
 api.add_resource(serveresource, '/getaudio/<string:filename>')
 api.add_resource(getstudentdatabase, '/getstuddb/<string:tablname>')
