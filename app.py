@@ -38,7 +38,7 @@ class getstudentdatabase(Resource):
         stmt = "SELECT * FROM ece_3b_dsp"
         data = None
         res = student_db.select(stmt, data)
-        getcolnames = "SELECT * FROM information_schema.columns WHERE TABLE_NAME='ece_3b_dsp';"
+        getcolnames = "SELECT COLUMN_NAME FROM information_schema.columns WHERE TABLE_NAME='ece_3b_dsp';"
         res.insert(0, student_db.select(getcolnames, None))
         return {'database': res, 'message': 'success'}, 200
 
