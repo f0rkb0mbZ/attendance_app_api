@@ -39,7 +39,9 @@ class getstudentdatabase(Resource):
         data = None
         res = student_db.select(stmt, data)
         getcolnames = "SELECT COLUMN_NAME FROM information_schema.columns WHERE TABLE_NAME='ece_3b_dsp';"
-        res.insert(0, student_db.select(getcolnames, None))
+        cols = student_db.select(getcolnames, None)
+        colnames = [x[0] for x in cols]
+        res.insert(0, colnames)
         return {'database': res, 'message': 'success'}, 200
 
 api.add_resource(createstudent, '/createstudent')
