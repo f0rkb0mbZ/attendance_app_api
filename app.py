@@ -16,8 +16,10 @@ class createstudent(Resource):
         attendancedb = Connectdb('studentdb')
         roll_no = response['roll_no']
         name = response['name']
-        stmt = "INSERT INTO solid_state_month_1 (roll_no, name) VALUES (%s, %s)" 
-        data = (roll_no, name, )
+        univ_roll_no = response['univ_roll_no']
+        reg_no = response['reg_no']
+        stmt = "INSERT INTO ece_3b_dsp (roll_no, univ_roll_no, reg_no, name) VALUES (%s, %s, %s, %s)" 
+        data = (roll_no, univ_roll_no, reg_no, name, )
         res = attendancedb.change(stmt, data)
         print(res)
         return {'message': res}, 201
