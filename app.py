@@ -89,15 +89,18 @@ class validatelogin(Resource):
         usrhash = logincreds['hash']
         stmtchk = "SELECT name FROM teachertabl WHERE name LIKE %s"
         chkusr = teacher_db.select(stmtchk, (usrname, ))
-        if chkusr[0][0] == usrname:
-            stmt = "SELECT hash FROM teachertabl WHERE name=%s"
-            data = (usrname, )
-            tablhash = teacher_db.select(stmt, data)
-            if tablhash[0][0] == usrhash:
-                return {'success': True}, 200
+        try:
+            if chkusr[0][0] == usrname:
+                stmt = "SELECT hash FROM teachertabl WHERE name=%s"
+                data = (usrname, )
+                tablhash = teacher_db.select(stmt, data)
+                if tablhash[0][0] == usrhash:
+                    return {'success': True}, 200
+                else:
+                    return {'success': False}, 401
             else:
-                return {'success': False}, 401
-        else:
+                return {'success': False}, 403
+        except IndexError:
             return {'success': False}, 403
 
 api.add_resource(validatelogin, '/validatelogin')
