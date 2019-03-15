@@ -24,7 +24,7 @@ class Connectdb:
         self.cursor.execute(stmt, data)
         self.conn.commit()
         return True, "Query OK, "+str(self.cursor.rowcount)+" rows affected!"
-        
+
 class Connectlite:
     def __init__(self, dbname):
         self.conn = sqlite3.connect(dbname+'.db')
