@@ -40,7 +40,7 @@ class getattendance(Resource):
         stmtchk = "SELECT `"+date+"` FROM ece_3b_dsp WHERE roll_no=%s"
         datachk = (roll_no, )
         reschk = attendancedb.select(stmtchk, datachk)
-        if reschk[0][0] == 0:
+        if reschk[0][0] == None:
             stmt = "UPDATE ece_3b_dsp SET `"+date+"` =1 WHERE roll_no=%s"
             data = (roll_no, )
             res = attendancedb.change(stmt, data)
@@ -49,7 +49,7 @@ class getattendance(Resource):
         else:
             return {'message': 'You got your attendance already!'}, 400
 
-            
+
 class getstudentdatabase(Resource):
     def get(self, tablname):
         student_db = Connectdb('studentdb')
