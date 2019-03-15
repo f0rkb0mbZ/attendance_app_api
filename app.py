@@ -37,12 +37,19 @@ class createstudent(Resource):
 class getattendance(Resource):
     def put(self, roll_no, date):
         attendancedb = Connectdb('studentdb')
-        stmt = "UPDATE ece_3b_dsp SET `"+date+"` =1 WHERE roll_no=%s"
-        data = (roll_no, )
-        res = attendancedb.change(stmt, data)
-        print(res)
-        return {'message': res, 'code': 201}, 201
+        stmtchk = "SELECT `"+date+"` FROM ece_3b_dsp WHERE roll_no=%s"
+        datachk = (roll_no, )
+        reschk = attendancedb.select(stmtchk, datachk)
+        if reschk[0][0] == 0:
+            stmt = "UPDATE ece_3b_dsp SET `"+date+"` =1 WHERE roll_no=%s"
+            data = (roll_no, )
+            res = attendancedb.change(stmt, data)
+            print(res)
+            return {'message': res, 'code': 201}, 201
+        else:
+            return {'message': 'You got your attendance already!'}, 400
 
+            
 class getstudentdatabase(Resource):
     def get(self, tablname):
         student_db = Connectdb('studentdb')
