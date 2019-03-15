@@ -103,7 +103,20 @@ class validatelogin(Resource):
         except IndexError:
             return {'success': False}, 403
 
+class usrregister(Resource):
+    def post(self):
+        teacher_db = Connectdb('teacherdb')
+        registercreds = request.get_json()
+        usrname = registercreds['name']
+        usrhash = registercreds['hash']
+        stmt = "INSERT INTO teachertabl (name, hash) VALUES (%s, %s)"
+        data = (usrname, usrhash, )
+        res = teacher_db.change(data, stmt)
+        return {'message': res}, 201
+        
+
 api.add_resource(validatelogin, '/validatelogin')
+api.add_resource(usrregister, '/usrregister')
 api.add_resource(createstudent, '/createstudent')
 api.add_resource(getattendance, '/getattendance/<string:date>/<string:roll_no>')
 api.add_resource(serveresource, '/getaudio/<string:filename>')
