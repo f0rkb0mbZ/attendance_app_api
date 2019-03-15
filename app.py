@@ -109,6 +109,7 @@ class usrregister(Resource):
         registercreds = request.get_json()
         usrname = registercreds['name']
         usrhash = registercreds['hash']
+        print(usrname, usrhash)
         stmt = "INSERT INTO teachertabl (name, hash) VALUES (%s, %s)"
         data = (usrname, usrhash, )
         res = teacher_db.change(data, stmt)
