@@ -52,4 +52,11 @@ API for the QR based class attendance app built using flutter
 ###      Produces:
 ####     application/json
           Sample: {"success": True}, 200 or {"success": False}, 401 (password wrong) or {"success": False}, 403 (username does not exist)
-
+## /usrregister POST
+###      Creates a teacher in db
+###      Consumes: 
+####     application/json
+          Sample: {"name": "Snehangshu Bhattacharya", "hash": "h9gf4w7t4t943hgwhg9f"}
+###      Produces:
+####     application/json
+          Sample: {"message": "some message"}, 201 (on success)
