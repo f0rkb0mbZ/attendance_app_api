@@ -114,7 +114,6 @@ class usrregister(Resource):
         data = (usrname, usrhash, )
         res = teacher_db.change(stmt, data)
         return {'message': res}, 201
-        
 
 api.add_resource(validatelogin, '/validatelogin')
 api.add_resource(usrregister, '/usrregister')
