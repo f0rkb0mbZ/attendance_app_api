@@ -35,7 +35,7 @@ API for the QR based class attendance app built using flutter
 ####     application/json
          Sample: {"message" : "some message"}, 201 (on success)
          
-## /getstuddb/{string:tablename}
+## /getstuddb/{string:tablename}    GET
 ###     Returns the table corresponding to a section
 ####     Table name structure: {dept_name}__{yearname(int)+section}__{subject} 
 ####     e.g. ece_3b_dsp == dept ece, 3rd year, section b, digital signal processing
@@ -44,4 +44,12 @@ API for the QR based class attendance app built using flutter
 ###     Produces: 
 ####     application/json
          Sample: {"database" : table, "message": "success"}, 200 OK
-         
+## /validatelogin POST
+###      Validate teacher login through api
+###      Consumes: 
+####     application/json
+          Sample: {"name": "Snehangshu Bhattacharya", "hash": "h9gf4w7t4t943hgwhg9f"}
+###      Produces:
+####     application/json
+          Sample: {"success": True}, 200 or {"success": False}, 401 (password wrong) or {"success": False}, 403 (username does not exist)
+
