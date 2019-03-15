@@ -112,7 +112,7 @@ class usrregister(Resource):
         print(usrname, usrhash)
         stmt = "INSERT INTO teachertabl (name, hash) VALUES (%s, %s)"
         data = (usrname, usrhash, )
-        res = teacher_db.change(data, stmt)
+        res = teacher_db.change(stmt, data)
         return {'message': res}, 201
         
 
