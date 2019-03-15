@@ -4,9 +4,9 @@ import sqlite3
 class Connectdb:
     def __init__(self, dbname):
         self.user = 'admin'
-        self.password = 'WVAAZYDTBBRYIJUJ'
+        self.password = 'LLETWGFLCOJZCUQC'
         self.host = 'sl-eu-gb-p03.dblayer.com'
-        self.port = 17531
+        self.port = 17795
         self.conn = mysql.connector.connect(
             user=self.user,
             password=self.password,
