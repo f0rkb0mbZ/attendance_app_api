@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, send_from_directory
+from flask import Flask, render_template, request, send_from_directory
 from flask_restful import Resource, Api
 from db import Connectdb
 import os
