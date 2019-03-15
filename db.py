@@ -11,7 +11,7 @@ class Connectdb:
             user=self.user,
             password=self.password,
             host=self.host,
-            port=self.port, 
+            port=self.port,
             database=dbname
             )
         self.cursor = self.conn.cursor()

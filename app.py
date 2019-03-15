@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, request, send_from_directory
 from flask_restful import Resource, Api
 from db import Connectdb
 import os
@@ -13,7 +13,6 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     return response
 
-    
 class serveresource(Resource):
     def get(self, filename):
         return send_from_directory(os.getcwd()+'/assets/', filename)
@@ -27,7 +26,7 @@ class createstudent(Resource):
         name = response['name']
         univ_roll_no = response['univ_roll_no']
         reg_no = response['reg_no']
-        stmt = "INSERT INTO ece_3b_dsp (roll_no, univ_roll_no, reg_no, name) VALUES (%s, %s, %s, %s)" 
+        stmt = "INSERT INTO ece_3b_dsp (roll_no, univ_roll_no, reg_no, name) VALUES (%s, %s, %s, %s)"
         data = (roll_no, univ_roll_no, reg_no, name, )
         res = attendancedb.change(stmt, data)
         print(res)
@@ -82,9 +81,26 @@ class deleteclass(Resource):
             res2 = student_db.change(stmt2, None)
             return {'message': res2}, 200
 
+class validatelogin(Resource):
+    def post(self):
+        teacher_db = Connectdb('teacherdb')
+        logincreds = request.get_json()
+        usrname = logincreds['name']
+        usrhash = logincreds['hash']
+        stmtchk = "SELECT name FROM teachertabl WHERE name LIKE %s"
+        chkusr = teacher_db.select(stmtchk, (usrname, ))
+        if chkusr[0][0] == usrname:
+            stmt = "SELECT hash FROM teachertabl WHERE name=%s"
+            data = (usrname, )
+            tablhash = teacher_db.select(stmt, data)
+            if tablhash[0][0] == usrhash:
+                return {'success': True}, 200
+            else:
+                return {'success': False}, 401
+        else:
+            return {'success': False}, 403
 
-
-
+api.add_resource(validatelogin, '/validatelogin')
 api.add_resource(createstudent, '/createstudent')
 api.add_resource(getattendance, '/getattendance/<string:date>/<string:roll_no>')
 api.add_resource(serveresource, '/getaudio/<string:filename>')
