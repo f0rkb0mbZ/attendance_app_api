@@ -1,10 +1,8 @@
 import asyncio
 import websockets
 from PIL import Image
-import cv2
 import base64
 import io
-import numpy as np
 import time
 
 def stringToRGB(base64_string):

@@ -3,3 +3,6 @@ Flask-RESTful
 gunicorn
 mysql-connector
 requests
+asyncio
+websockets
+pyqrcode
