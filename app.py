@@ -2,6 +2,7 @@ from flask import Flask, request, send_from_directory
 from flask_restful import Resource, Api
 from db import Connectdb
 import os
+import json
 app = Flask(__name__)
 api = Api(app)
 
@@ -34,19 +35,26 @@ class createstudent(Resource):
 
 
 class getattendance(Resource):
-    def put(self, roll_no, date):
-        attendancedb = Connectdb('studentdb')
-        stmtchk = "SELECT `"+date+"` FROM ece_3b_dsp WHERE roll_no=%s"
-        datachk = (roll_no, )
-        reschk = attendancedb.select(stmtchk, datachk)
-        if reschk[0][0] == None:
-            stmt = "UPDATE ece_3b_dsp SET `"+date+"` =1 WHERE roll_no=%s"
-            data = (roll_no, )
-            res = attendancedb.change(stmt, data)
-            print(res)
-            return {'message': res, 'code': 201}, 201
+    def put(self, publichash, roll_no, date):
+        with open('auth.json') as authjson:
+            jsondata = json.load(authjson)
+            privatehash = jsondata['token']
+            authjson.close()
+        if privatehash == publichash:
+            attendancedb = Connectdb('studentdb')
+            stmtchk = "SELECT `"+date+"` FROM ece_3b_dsp WHERE roll_no=%s"
+            datachk = (roll_no, )
+            reschk = attendancedb.select(stmtchk, datachk)
+            if reschk[0][0] == None:
+                stmt = "UPDATE ece_3b_dsp SET `"+date+"` =1 WHERE roll_no=%s"
+                data = (roll_no, )
+                res = attendancedb.change(stmt, data)
+                print(res)
+                return {'message': res, 'code': 201}, 201
+            else:
+                return {'message': 'You got your attendance already!'}, 400
         else:
-            return {'message': 'You got your attendance already!'}, 400
+            return {'message': 'Hash mismatch! Dont try to copy QRs ;)'}, 404
 
 
 class getstudentdatabase(Resource):
@@ -118,7 +126,7 @@ class usrregister(Resource):
 api.add_resource(validatelogin, '/validatelogin')
 api.add_resource(usrregister, '/usrregister')
 api.add_resource(createstudent, '/createstudent')
-api.add_resource(getattendance, '/getattendance/<string:date>/<string:roll_no>')
+api.add_resource(getattendance, '/getattendance/<string:publichash>/<string:date>/<string:roll_no>')
 api.add_resource(serveresource, '/getaudio/<string:filename>')
 api.add_resource(getstudentdatabase, '/getstuddb/<string:tablname>')
 api.add_resource(createclass, '/createclass/<string:date>')
