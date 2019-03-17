@@ -11,7 +11,7 @@ async def sendqr(websocket, path):
     print(qr_request)
     await websocket.send(qr)
 
-start_server = websockets.serve(sendqr, 'localhost', 8765)
+start_server = websockets.serve(sendqr, '0.0.0.0', 80)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()

@@ -131,3 +131,5 @@ api.add_resource(serveresource, '/getaudio/<string:filename>')
 api.add_resource(getstudentdatabase, '/getstuddb/<string:tablname>')
 api.add_resource(createclass, '/createclass/<string:date>')
 api.add_resource(deleteclass, '/deleteclass/<string:date>')
+
+app.run(host='0.0.0.0', debug=False, port=80)
