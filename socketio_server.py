@@ -1,9 +1,11 @@
 from flask import Flask
 from flask_socketio import SocketIO, send, emit
+from flask_cors import CORS
 from dynamicqrauth import tokengen, createbase64QR
 import time
 
 app = Flask(__name__)
+CORS(app)
 socketio = SocketIO(app)
 
 @app.after_request

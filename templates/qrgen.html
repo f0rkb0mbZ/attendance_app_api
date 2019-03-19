@@ -13,9 +13,10 @@
                     window.setInterval(function(){
                         socket.emit('sendqr', count);
                         count++;
-                    }, 3000);
+                    }, 10000);
                 })
                 socket.on('base64qr', function(msg){
+                    console.log(msg)
                     var img = document.getElementById("base64qr");
                     img.setAttribute("src", 'data:image/png;base64, '+ msg);
                     img.setAttribute("height", 256);
