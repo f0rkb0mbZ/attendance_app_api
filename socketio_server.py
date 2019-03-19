@@ -13,12 +13,12 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     return response
 
-@socketio.on('connect', namespace='/getqr', methods=['GET', 'POST'])
+@socketio.on('connect', namespace='/getqr')
 def test_connect():
     print('Client Connected')
         
 
-@socketio.on('sendqr', namespace='/getqr', methods=['GET', 'POST'])
+@socketio.on('sendqr', namespace='/getqr')
 def sendqr(sendqr):
     print("Number of pings: "+ str(sendqr))
     url = "https://attandance-app.herokuapp.com/getattendance"
@@ -27,7 +27,7 @@ def sendqr(sendqr):
     emit('base64qr', qr, namespace='/getqr')
 
 
-@socketio.on('disconnect', namespace='/getqr', methods=['GET', 'POST'])
+@socketio.on('disconnect', namespace='/getqr')
 def test_disconnect():
     print('Client disconnected')
 
