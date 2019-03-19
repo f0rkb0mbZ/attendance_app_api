@@ -1,5 +1,6 @@
 Flask
 Flask-RESTful
+Flask-SocketIO
 gunicorn
 mysql-connector
 requests
