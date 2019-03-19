@@ -22,17 +22,9 @@ def tokengen(baseurl):
 def createbase64QR(baseurl, authtoken):
     url = baseurl +'/' + authtoken + '/'
     img = pyqrcode.create(url)
-    img.png('authQR.png', scale=16)
+    img.png('authQR.png', scale=8)
     with open('authQR.png', 'rb') as qr:
         encodedqr = base64.b64encode(qr.read())
         qr.close()
-    return encodedqr
-
-if __name__ == "__main__":
-    url = "https://attandance-app.herokuapp.com/getattendance"
-    token = tokengen(url)
-    qr = createbase64QR(url, token)
-    print(qr)
-
-
-
+    strqr = str(encodedqr)
+    return strqr[1:].strip("'")

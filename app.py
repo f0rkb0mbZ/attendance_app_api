@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, render_template
 from flask_restful import Resource, Api
 from db import Connectdb
 import os
@@ -13,6 +13,10 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     return response
+
+@app.route('/')
+def qrgen():
+    return render_template('qrgen.html')
 
 class serveresource(Resource):
     def get(self, filename):

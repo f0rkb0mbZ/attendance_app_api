@@ -1,2 +1,6 @@
 AttendanceDash/
 __pycache__/
+socket_client.py
+socket_server.py
+qr.py
+qr_test.py

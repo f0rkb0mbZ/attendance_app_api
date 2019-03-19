@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function(){
+                //var socket = io.connect('http://127.0.0.1:5000/getqr')
+                var socket = io.connect('https://attandance-app.herokuapp.com/getqr')
+                socket.on('connect', function(){
+                    count = 0
+                    socket.emit('sendqr', count);
+                    window.setInterval(function(){
+                        socket.emit('sendqr', count);
+                        count++;
+                    }, 3000);
+                })
+                socket.on('base64qr', function(msg){
+                    var img = document.getElementById("base64qr");
+                    img.setAttribute("src", 'data:image/png;base64, '+ msg);
+                    img.setAttribute("height", 256);
+                    img.setAttribute("width", 256);
+                })
+            }) 
+        </script>
+    </head>
+    <body>
+        <img src="" height="256" width="256" id="base64qr">
+    </body>
+</html>
