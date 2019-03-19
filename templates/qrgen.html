@@ -6,7 +6,7 @@
         <script>
             $(document).ready(function(){
                 //var socket = io.connect('http://127.0.0.1:5000/getqr')
-                var socket = io.connect('https://attandance-app.herokuapp.com/getqr')
+                var socket = io.connect('http://attandance-app.herokuapp.com/getqr')
                 socket.on('connect', function(){
                     count = 0
                     socket.emit('sendqr', count);

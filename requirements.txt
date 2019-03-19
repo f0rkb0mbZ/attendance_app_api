@@ -9,4 +9,5 @@ asyncio
 websockets
 pyqrcode
 pypng
-eventlet
+gevent
+gevent-websocket
