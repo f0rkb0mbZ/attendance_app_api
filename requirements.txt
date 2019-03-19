@@ -7,3 +7,4 @@ requests
 asyncio
 websockets
 pyqrcode
+pypng
