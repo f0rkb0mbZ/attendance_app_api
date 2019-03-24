@@ -10,7 +10,7 @@ import json
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
-
+socketio = SocketIO(app)
 
 @app.after_request
 def after_request(response):
