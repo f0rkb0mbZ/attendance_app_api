@@ -1,9 +1,14 @@
 from flask import Flask, request, send_from_directory, render_template
 from flask_restful import Resource, Api
 from db import Connectdb
+from flask_socketio import SocketIO, send, emit
+from flask_cors import CORS
+from dynamicqrauth import tokengen, createbase64QR
+import time
 import os
 import json
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 
@@ -17,7 +22,9 @@ def after_request(response):
 @app.route('/')
 def qrgen():
     return render_template('qrgen.html')
-
+"""
+API part: This portion runs the api used in the client side app
+"""
 class serveresource(Resource):
     def get(self, filename):
         return send_from_directory(os.getcwd()+'/assets/', filename)
@@ -135,5 +142,32 @@ api.add_resource(serveresource, '/getaudio/<string:filename>')
 api.add_resource(getstudentdatabase, '/getstuddb/<string:tablname>')
 api.add_resource(createclass, '/createclass/<string:date>')
 api.add_resource(deleteclass, '/deleteclass/<string:date>')
+
+
+"""
+Flask-SocketIO part: this portion runs the socket-server for generating the QR code.
+"""
+
+@socketio.on('connect', namespace='/getqr')
+def test_connect():
+    print('Client Connected')
+        
+
+@socketio.on('sendqr', namespace='/getqr')
+def sendqr(sendqr):
+    print("Number of pings: "+ str(sendqr))
+    url = "https://attandance-app.herokuapp.com/getattendance"
+    token = tokengen(url)
+    qr = createbase64QR(url, token)
+    emit('base64qr', qr, namespace='/getqr')
+
+
+@socketio.on('disconnect', namespace='/getqr')
+def test_disconnect():
+    print('Client disconnected')
+
+
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False, port=80)
+    # app.run(host='0.0.0.0', debug=False, port=80)
+    socketio.run(app)
