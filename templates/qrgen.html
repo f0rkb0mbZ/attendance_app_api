@@ -14,7 +14,7 @@
                     window.setInterval(function(){
                         socket.emit('sendqr', count);
                         count++;
-                    }, 10000);
+                    }, 40000);
                 })
                 socket.on('base64qr', function(msg){
                     console.log(msg)
